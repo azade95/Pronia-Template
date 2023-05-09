@@ -1,0 +1,55 @@
+﻿@model List<Tag>
+@{
+    int count = 0;
+}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Tag</h4>
+            <a class="btn btn-success" asp-controller="tag" asp-action="create">Create tag</a>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                No
+                            </th>
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Settings
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Tag item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+
+                                <td>
+                                    @item.Name
+                                </td>
+
+                                <td>
+                                    <a class="btn btn-warning" asp-action="update" asp-controller="tag" asp-route-id="@item.Id"><i class="mdi mdi-pencil-box"></i></a>
+                                    <a class="btn btn-danger" asp-action="delete" asp-controller="tag" asp-route-id="@item.Id"><i class="mdi mdi-delete"></i></a>
+                                    <a class="btn btn-primary"><i class="mdi mdi-open-in-new"></i></a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
