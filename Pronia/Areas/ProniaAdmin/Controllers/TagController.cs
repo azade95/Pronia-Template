@@ -26,7 +26,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Create(Tag tag)
         {
             if (!ModelState.IsValid) return View();
-            bool result = _context.Tags.Any(c => c.Name.Trim().ToLower() == tag.Name.Trim().ToLower());
+            bool result = _context.Tags.Any(t => t.Name.Trim().ToLower() == tag.Name.Trim().ToLower());
             if (result)
             {
                 ModelState.AddModelError("Name", "Bu adda tag  movcuddur");
@@ -40,7 +40,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Update(int? id)
         {
             if (id == null || id < 1) return BadRequest();
-            Tag existed = await _context.Tags.FirstOrDefaultAsync(c => c.Id == id);
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
             if (existed == null) return NotFound();
             return View(existed);
         }
@@ -48,10 +48,10 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Update(int? id, Tag tag)
         {
             if (id == null || id < 1) return BadRequest();
-            Tag existed = await _context.Tags.FirstOrDefaultAsync(c => c.Id == id);
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
             if (existed == null) return NotFound();
             if (!ModelState.IsValid) return View(existed);
-            bool result = _context.Tags.Any(c => c.Name.Trim().ToLower() == tag.Name.Trim().ToLower() && c.Id != id);
+            bool result = _context.Tags.Any(t => t.Name.Trim().ToLower() == tag.Name.Trim().ToLower() && t.Id != id);
             if (result)
             {
                 ModelState.AddModelError("Name", "Bu adda tag  movcuddur");
@@ -68,7 +68,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id < 1) return BadRequest();
-            Tag existed = await _context.Tags.FirstOrDefaultAsync(c => c.Id == id);
+            Tag existed = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
             if (existed == null) return NotFound();
             _context.Tags.Remove(existed);
             await _context.SaveChangesAsync();
