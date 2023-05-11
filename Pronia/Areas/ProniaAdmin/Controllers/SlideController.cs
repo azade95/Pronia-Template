@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pronia.DAL;
 using Pronia.Models;
+using Pronia.Utilities.Exstensions;
 
 namespace Pronia.Areas.ProniaAdmin.Controllers
 {
@@ -9,9 +10,12 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
     public class SlideController : Controller
     {
         private readonly AppDbContext _context;
-        public SlideController(AppDbContext context)
+        private readonly IWebHostEnvironment _env;
+
+        public SlideController(AppDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
         public async Task<IActionResult> Index()
         {
@@ -31,12 +35,12 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 ModelState.AddModelError("Photo", "Photo bos qala bilmez");
                 return View();
             }
-            if (!slide.Photo.ContentType.Contains("image/"))
+            if (!slide.Photo.CheckFileType("image/"))
             {
                 ModelState.AddModelError("Photo", "File tipi dogru deyil. Zehmet olmasa photo secin");
                 return View();
             }
-            if (slide.Photo.Length > 2048 * 1024)
+            if (slide.Photo.CheckFileLength(2048))
             {
                 ModelState.AddModelError("Photo", "File olcusu 2mbdan boyuk olmamalidir");
                 return View();
@@ -46,10 +50,8 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
                 ModelState.AddModelError("Order", "Daxil etdiyiniz orderde bir slide movcuddur");
                 return View();
             }
-            FileStream file = new FileStream(@"C:\Users\ACER\Desktop\pronia\Pronia\Pronia\wwwroot\assets\images\website-images\" + slide.Photo.FileName, FileMode.Create);
-            await slide.Photo.CopyToAsync(file);
-            slide.Image = slide.Photo.FileName;
-            _context.Slides.Add(slide);
+            slide.Image = await slide.Photo.CreateFile(_env.WebRootPath, @"admin/images/slide/");
+            await _context.AddAsync(slide);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -69,32 +71,38 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             if (existed == null) return NotFound();
 
 
-            if (slide.Photo == null)
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("Photo", "Photo bos qala bilmez");
                 return View(existed);
             }
-            if (!slide.Photo.ContentType.Contains("image/"))
+            if (_context.Slides.Any(s => s.Order == slide.Order))
             {
-                ModelState.AddModelError("Photo", "File tipi dogru deyil. Zehmet olmasa photo secin");
-                return View(existed);
+                Slide sameOrderSlide = await _context.Slides.FirstOrDefaultAsync(s => s.Order == slide.Order && s.Id != id);
+                int sameOrder = sameOrderSlide.Order;
+                sameOrderSlide.Order = existed.Order;
+                existed.Order = slide.Order;
+
             }
-            if (slide.Photo.Length > 2048 * 1024)
+
+            if (slide.Photo != null)
             {
-                ModelState.AddModelError("Photo", "File olcusu 2mbdan boyuk olmamalidir");
-                return View(existed);
-            }
-            if (_context.Slides.Any(s => s.Order == slide.Order&&s.Id!=id))
-            {
-                ModelState.AddModelError("Order", "Daxil etdiyiniz orderde bir slide movcuddur");
-                return View(existed);
+                if (!slide.Photo.CheckFileType("image/"))
+                {
+                    ModelState.AddModelError("Photo", "File tipi duzgun deyil");
+                    return View(existed);
+                }
+                if (!slide.Photo.CheckFileLength(2048))
+                {
+                    ModelState.AddModelError("Photo", "File olcusu 2mbdan cox olmamalidir");
+                    return View(existed);
+                }
+                existed.Image.DeleteFile(_env.WebRootPath, @"admin/images/slide/");
+                existed.Image = await slide.Photo.CreateFile(_env.WebRootPath, @"admin/images/slide/");
             }
             existed.Title = slide.Title;
             existed.SubTitle = slide.SubTitle;
             existed.Description = slide.Description;
-            existed.Order= slide.Order;
-            existed.Photo = slide.Photo;
-            existed.Image = slide.Photo.FileName;
+            
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
 
