@@ -1,0 +1,28 @@
+﻿@using Pronia.ViewModels.Employee;
+@model UpdateEmployeeVM
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update Employee</h4>
+
+            <form class="forms-sample" method="post">
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Name" value="@Model.Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <select asp-for="PositionId">
+                        @foreach (Position position in (List<Position>)ViewData["Positions"])
+                        {
+                            <option value="@position.Id">@position.Name</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary me-2">Update</button>
+                <a asp-action="index" asp-controller="employee" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+

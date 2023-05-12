@@ -22,5 +22,7 @@ namespace Pronia.DAL
         public DbSet<ProductSize> ProductSizes { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Profession> Professions { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Position> Positions { get; set; }
     }
 }
