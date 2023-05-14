@@ -1,12 +1,12 @@
-﻿@model List<Employee>
+﻿@model List<Banner>
 @{
     int count = 0;
 }
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Employee</h4>
-            <a class="btn btn-success" asp-controller="employee" asp-action="create">Create Employee</a>
+            <h4 class="card-title">Banner</h4>
+            <a class="btn btn-success" asp-controller="banner" asp-action="create">Create Banner</a>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -15,10 +15,10 @@
                                 No
                             </th>
                             <th>
-                                Name
+                                Image
                             </th>
                             <th>
-                                position
+                                Title
                             </th>
 
                             <th>
@@ -27,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Employee item in Model)
+                        @foreach (Banner banner in Model)
                         {
                             count++;
                             <tr>
@@ -36,16 +36,15 @@
                                 </td>
 
                                 <td>
-                                    @item.Name
+                                    <img style="width:150px; height:150px" src="~/assets/images/website-images/banner/@banner.Image">
                                 </td>
                                 <td>
-                                    @item.Position.Name
+                                    @banner.Title
                                 </td>
-                                
                                 <td>
-                                    <a class="btn btn-warning" asp-action="update" asp-controller="employee" asp-route-id="@item.Id"><i class="mdi mdi-pencil-box"></i></a>
-                                    <a class="btn btn-danger" asp-action="delete" asp-controller="employee" asp-route-id="@item.Id"><i class="mdi mdi-delete"></i></a>
-                                    <a class="btn btn-primary" asp-action="details" asp-controller="employee" asp-route-id="@item.Id"><i class="mdi mdi-open-in-new"></i></a>
+                                    <a class="btn btn-warning" asp-action="update" asp-controller="banner" asp-route-id="@banner.Id"><i class="mdi mdi-pencil-box"></i></a>
+                                    <a class="btn btn-danger" asp-action="delete" asp-controller="banner" asp-route-id="@banner.Id"><i class="mdi mdi-delete"></i></a>
+                                    <a class="btn btn-primary" asp-action="details" asp-controller="banner" asp-route-id="@banner.Id"><i class="mdi mdi-open-in-new"></i></a>
                                 </td>
                             </tr>
                         }

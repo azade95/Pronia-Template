@@ -37,7 +37,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             };
             _context.Employees.Add(employee);
             _context.SaveChanges();
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Update(int? id)
         {
@@ -59,7 +59,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             {
                 return RedirectToAction("Index");
             }
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 ViewData["Positions"] = _context.Positions.ToList(); ;
                 return View(employeeVM);
@@ -67,7 +67,19 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
             existed.Name=employeeVM.Name;
             existed.PositionId=employeeVM.PositionId;
             _context.Employees.Update(existed);
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id < 0) return BadRequest();
+            Employee existed = _context.Employees.FirstOrDefault(e => e.Id == id);
+            if (existed == null) return NotFound();
+            _context.Employees.Remove(existed);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

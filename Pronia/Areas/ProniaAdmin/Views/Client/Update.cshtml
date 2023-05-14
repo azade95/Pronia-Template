@@ -1,0 +1,45 @@
+﻿@model UpdateClientVM
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update Employee</h4>
+
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Name" value="@Model.Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname">Surname</label>
+                    <input asp-for="Surname" class="form-control" placeholder="Surname" value="@Model.Surname">
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description">Description</label>
+                    <input asp-for="Description" class="form-control" placeholder="Description" value="@Model.Description">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <img style="width:50%; height:50%;" src="~/assets/images/website-images/client/@Model.Image" />
+                </div>
+                <div class="form-group">
+                    <select asp-for="ProfessionId">
+                        @foreach (Profession profession in ViewBag.Professions)
+                        {
+                            <option value="@profession.Id">@profession.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Photo">Photo</label>
+                    <input asp-for="Photo" class="form-control" placeholder="Photo">
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary me-2">Update</button>
+                <a asp-action="index" asp-controller="employee" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+

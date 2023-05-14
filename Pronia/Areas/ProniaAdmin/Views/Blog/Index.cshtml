@@ -1,0 +1,72 @@
+﻿@model List<Blog>
+@{
+    int count = 0;
+}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Blogr</h4>
+            <a class="btn btn-success" asp-controller="blog" asp-action="create">Create Blog</a>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                No
+                            </th>
+                            <th>
+                                Image
+                            </th>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Created
+                            </th>
+                            <th>
+                                Updated
+                            </th>
+
+                            <th>
+                                Settings
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Blog blog in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+
+                                <td>
+                                    <img style="width:150px; height:150px" src="~/assets/images/website-images/banner/@blog.Image">
+                                </td>
+                                <td>
+                                    @blog.Title
+                                </td>
+                                <td>
+                                    @blog.CreatedAt.ToString("dddd, dd MMMM yyyy");
+                                </td>
+                                <td>
+                                    @blog.UpdatedAt.ToString("dddd, dd MMMM yyyy");
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" asp-action="update" asp-controller="blog" asp-route-id="@blog.Id"><i class="mdi mdi-pencil-box"></i></a>
+                                    <a class="btn btn-danger" asp-action="delete" asp-controller="blog" asp-route-id="@blog.Id"><i class="mdi mdi-delete"></i></a>
+                                    <a class="btn btn-primary" asp-action="details" asp-controller="blog" asp-route-id="@blog.Id"><i class="mdi mdi-open-in-new"></i></a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

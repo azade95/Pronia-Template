@@ -24,5 +24,7 @@ namespace Pronia.DAL
         public DbSet<Profession> Professions { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Position> Positions { get; set; }
+        public DbSet<Banner> Banners { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
     }
 }

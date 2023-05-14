@@ -19,6 +19,9 @@
   <ItemGroup>
     <Folder Include="Areas\ProniaAdmin\Data\" />
     <Folder Include="Areas\ProniaAdmin\Models\" />
+    <Folder Include="wwwroot\assets\images\website-images\banner\" />
+    <Folder Include="wwwroot\assets\images\website-images\client\" />
+    <Folder Include="wwwroot\assets\images\website-images\blog\" />
   </ItemGroup>
 
 </Project>
