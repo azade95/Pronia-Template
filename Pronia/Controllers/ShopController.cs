@@ -20,17 +20,19 @@ namespace Pronia.Controllers
         
         public async Task<IActionResult> Details(int id)
         {
+            Product product = await _context.Products
+                .Include(p => p.ProductImages)
+                .Include(p => p.Category)
+                .Include(p => p.ProductTags).ThenInclude(pt => pt.Tag)
+                .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
+                .Include(p => p.ProductSizes).ThenInclude(ps => ps.Size)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            List<Product> products = await _context.Products.Where(p => p.CategoryId == product.CategoryId && p.Id != product.Id).Include(p => p.ProductImages).ToListAsync();
             ShopVM shopVM= new ShopVM
             {
 
-                 Product = await _context.Products
-                .Include(p=>p.ProductImages)
-                .Include(p=>p.Category)
-                .Include(p=>p.ProductTags).ThenInclude(pt=>pt.Tag)
-                .Include(p=>p.ProductColors).ThenInclude(pc=>pc.Color)
-                .Include(p=>p.ProductSizes).ThenInclude(ps=>ps.Size)
-                .FirstOrDefaultAsync(p=>p.Id==id),
-                Products = await _context.Products.Include(p => p.ProductImages).ToListAsync()
+                 Product =product,
+                Products = products
 
             };
             if (shopVM.Product == null) return NotFound(); 
