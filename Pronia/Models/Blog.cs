@@ -11,5 +11,7 @@ namespace Pronia.Models
         public string Image { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set;}
+        public int AuthorId { get; set; }
+        public Author Author { get; set; }
     }
 }

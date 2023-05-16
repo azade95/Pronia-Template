@@ -2,6 +2,37 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
+            <h4 class="card-title">Update Employee</h4>
+
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Title">Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="Title" value="@Model.Title">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubTitle">SubTitle</label>
+                    <input asp-for="SubTitle" class="form-control" placeholder="SubTitle" value="@Model.SubTitle">
+                    <span asp-validation-for="SubTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <img style="width:50%; height:50%;" src="~/assets/images/website-images/banner/@Model.Image" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Photo">Photo</label>
+                    <input asp-for="Photo" class="form-control" placeholder="Photo">
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary me-2">Update</button>
+                <a asp-action="index" asp-controller="employee" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
             <h4 class="card-title">Create Banner</h4>
 
             <form class="forms-sample" method="post" enctype="multipart/form-data">
@@ -30,5 +61,5 @@
         </div>
     </div>
 </div>
-
+*@
 

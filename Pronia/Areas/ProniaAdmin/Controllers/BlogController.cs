@@ -26,6 +26,7 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Authors= _context.Authors.ToList();
             return View();
         }
         [HttpPost]
@@ -33,16 +34,19 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
         {
             if(!ModelState.IsValid)
             {
+                ViewBag.Authors= _context.Authors.ToList();
                 return View(blogVM);
             }
             if (!blogVM.Photo.CheckFileType("image/"))
             {
                 ModelState.AddModelError("Photo", "File tipi dogru deyil");
+                ViewBag.Authors= _context.Authors.ToList();
                 return View(blogVM);
             }
             if (!blogVM.Photo.CheckFileLength(2048))
             {
                 ModelState.AddModelError("Photo", "File olchusu 2mbdan chox olmamalidir");
+                ViewBag.Authors = _context.Authors.ToList();
                 return View(blogVM);
             }
             Blog blog=new Blog
