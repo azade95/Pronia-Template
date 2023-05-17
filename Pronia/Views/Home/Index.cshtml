@@ -120,13 +120,13 @@
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a id="bestseller-tab"
+                        <a id="cheapest-tab"
                            data-bs-toggle="tab"
-                           href="#bestseller"
+                           href="#cheapest"
                            role="tab"
-                           aria-controls="bestseller"
+                           aria-controls="cheapest"
                            aria-selected="false">
-                            Bestseller
+                            Cheapest
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -145,18 +145,18 @@
                          id="featured"
                          role="tabpanel"
                          aria-labelledby="featured-tab">
-                        @await Html.PartialAsync("OurProductsPartialView",Model.Products)
+                        @await Component.InvokeAsync("Product",1)
                     </div>
                     <div class="tab-pane fade"
-                         id="bestseller"
+                         id="cheapest"
                          role="tabpanel"
                          aria-labelledby="bestseller-tab">
-                        @await Html.PartialAsync("OurProductsPartialView",Model.Products)
+                        @await Component.InvokeAsync("Product",2)
                     <div class="tab-pane fade"
                          id="latest"
                          role="tabpanel"
                          aria-labelledby="latest-tab">
-                            @await Html.PartialAsync("OurProductsPartialView",Model.Products)
+                            @await Component.InvokeAsync("Product",3)
                     </div>
                 </div>
             </div>
