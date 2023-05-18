@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Pronia.DAL;
 using Pronia.Models;
 using Pronia.ViewModels;
@@ -39,5 +40,7 @@ namespace Pronia.Controllers
 
             return View(shopVM);
         }
+
+        
     }
 }
