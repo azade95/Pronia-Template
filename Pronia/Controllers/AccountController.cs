@@ -39,6 +39,7 @@ namespace Pronia.Controllers
                 Surname = newuser.Surname.Capitalize(),
                 Email = newuser.Email,
                 UserName = newuser.Name,
+                Gender= newuser.Gender,
 
             };
              IdentityResult result=await _userManager.CreateAsync(user,newuser.Password);
@@ -59,6 +60,27 @@ namespace Pronia.Controllers
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Login(LoginVM loginVM)
+        {
+            if(!ModelState.IsValid) return View();
+
+            AppUser existed = await _userManager.FindByNameAsync(loginVM.UsernameOrEmail);
+            if (existed == null)
+            {
+                existed=await _userManager.FindByEmailAsync(loginVM.UsernameOrEmail);
+            }
+
+            var result =await _signInManager.PasswordSignInAsync(existed, loginVM.Password, loginVM.IsRemember, true);
+            if (!result.Succeeded)
+            {
+                return View(); 
+            }
+            return RedirectToAction("Index", "Home");
+            
         }
 
         public async Task<IActionResult> LogOut()

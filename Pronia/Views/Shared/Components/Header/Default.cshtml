@@ -89,13 +89,32 @@
                                         @Html.Raw(@settings["UsersIcon"])
                                     </button>
                                     <ul class="dropdown-menu"
-                                        aria-labelledby="settingButton">
-                                        <li>
-                                            <a class="dropdown-item" href="my-account.html">My account</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="login-register.html">Login | Register</a>
-                                        </li>
+                                        aria-labelledby="stickysettingButton">
+
+
+
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" href="my-account.html">@User.Identity.Name</a>
+                                            </li>
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="account" asp-action="logout">Log out</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="account" asp-action="register">Register</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="account" asp-action="login">Login</a>
+                                            </li>
+                                        }
+
                                     </ul>
                                 </li>
                                 <li class="d-none d-lg-block">
@@ -401,29 +420,30 @@
                                     </button>
                                     <ul class="dropdown-menu"
                                         aria-labelledby="stickysettingButton">
-                                        
-                                        
-                                            <li>
-                                            @if (User.Identity.IsAuthenticated)
-                                            {
-                                                
-                                            <a class="dropdown-item" href="my-account.html">@User.Identity.Name</a>
-                                            }
-                                            </li>
-                                        
-                                            <li>
+
+
+
                                         @if (User.Identity.IsAuthenticated)
                                         {
-                                                <a class="dropdown-item" asp-controller="account" asp-action="logout" >Log out</a>
+                                            <li>
+                                                <a class="dropdown-item" href="my-account.html">@User.Identity.Name</a>
+                                            </li>
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="account" asp-action="logout">Log out</a>
+                                            </li>
                                         }
                                         else
                                         {
+                                            <li>
                                                 <a class="dropdown-item" asp-controller="account" asp-action="register">Register</a>
-                                            
-                                                <a class="dropdown-item" asp-controller="account" asp-action="login">Login</a>
-                                            
-                                        }
                                             </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="account" asp-action="login">Login</a>
+                                            </li>
+                                        }
 
                                     </ul>
                                 </li>
@@ -781,23 +801,23 @@
         </div>
     </div>
     <div class="offcanvas-minicart_wrapper" id="miniCart">
-       
-            <div class="offcanvas-body">
-                <div class="minicart-content">
-                    <div class="minicart-heading">
-                        <h4 class="mb-0">Shopping Cart</h4>
-                        <a href="#" class="button-close">
-                            <i class="pe-7s-close"
-                               data-tippy="Close"
-                               data-tippy-inertia="true"
-                               data-tippy-animation="shift-away"
-                               data-tippy-delay="50"
-                               data-tippy-arrow="true"
-                               data-tippy-theme="sharpborder"></i>
-                        </a>
-                    </div>
-                    <ul class="minicart-list">
-                    @foreach(BasketItemVM item in items)
+
+        <div class="offcanvas-body">
+            <div class="minicart-content">
+                <div class="minicart-heading">
+                    <h4 class="mb-0">Shopping Cart</h4>
+                    <a href="#" class="button-close">
+                        <i class="pe-7s-close"
+                           data-tippy="Close"
+                           data-tippy-inertia="true"
+                           data-tippy-animation="shift-away"
+                           data-tippy-delay="50"
+                           data-tippy-arrow="true"
+                           data-tippy-theme="sharpborder"></i>
+                    </a>
+                </div>
+                <ul class="minicart-list">
+                    @foreach (BasketItemVM item in items)
                     {
                         total += item.Count * item.Price;
                         <li class="minicart-product">
@@ -823,20 +843,20 @@
                             </div>
                         </li>
                     }
-                        
-                    </ul>
-                </div>
-                <div class="minicart-item_total">
-                    <span>Subtotal</span>
-                    <span class="ammount">$@total</span>
-                </div>
-                <div class="group-btn_wrap d-grid gap-2">
-                    <a href="cart.html" class="btn btn-dark">View Cart</a>
-                    <a href="checkout.html" class="btn btn-dark">Checkout</a>
-                </div>
+
+                </ul>
             </div>
-        
-       
+            <div class="minicart-item_total">
+                <span>Subtotal</span>
+                <span class="ammount">$@total</span>
+            </div>
+            <div class="group-btn_wrap d-grid gap-2">
+                <a href="cart.html" class="btn btn-dark">View Cart</a>
+                <a href="checkout.html" class="btn btn-dark">Checkout</a>
+            </div>
+        </div>
+
+
     </div>
     <div class="global-overlay"></div>
 </header>
