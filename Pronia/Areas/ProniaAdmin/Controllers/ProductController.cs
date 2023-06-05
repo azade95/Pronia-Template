@@ -163,5 +163,26 @@ namespace Pronia.Areas.ProniaAdmin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null || id < 1) return BadRequest();
+            Product product = await _context.Products.Where(p => p.Id == id).Include(p=>p.ProductTags).FirstOrDefaultAsync();
+            if (product == null) return NotFound();
+            UpdateProductVM productVM = new UpdateProductVM
+            {
+                Name = product.Name,
+                Description = product.Description,
+                SKU = product.SKU,
+                Price = product.Price,
+                CategoryId = product.CategoryId,
+                TagIds= product.ProductTags.Select(p => p.TagId).ToList()
+            };
+
+            ViewBag.Categories = await _context.Categories.ToListAsync();
+            ViewBag.Tags = await _context.Tags.ToListAsync();
+            return View(productVM);
+
+        }
     }
 }

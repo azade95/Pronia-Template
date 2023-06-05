@@ -1,0 +1,48 @@
+﻿@model UpdateProductVM
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create Product</h4>
+
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price">Price</label>
+                    <input asp-for="Price" class="form-control" placeholder="Price">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description">Description</label>
+                    <input asp-for="Description" class="form-control" placeholder="Description">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SKU">SKU</label>
+                    <input asp-for="SKU" class="form-control" placeholder="SKU">
+                    <span asp-validation-for="SKU" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CategoryId">Category</label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name))">
+                        <option disabled selected>Select Category</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="CategoryId"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TagIds">Tags</label>
+                    <select asp-for="TagIds" class="form-control" asp-items="new SelectList(ViewBag.Tags,nameof(Tag.Id),nameof(Tag.Name))">
+                    </select>
+                    <span class="text-danger" asp-validation-for="TagIds"></span>
+                </div>
+                <button type="submit" class="btn btn-primary me-2">Create</button>
+                <a asp-action="index" asp-controller="product" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
