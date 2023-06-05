@@ -23,6 +23,7 @@
     <Folder Include="wwwroot\assets\images\website-images\banner\" />
     <Folder Include="wwwroot\assets\images\website-images\client\" />
     <Folder Include="wwwroot\assets\images\website-images\blog\" />
+    <Folder Include="wwwroot\assets\images\website-images\product\" />
   </ItemGroup>
 
 </Project>

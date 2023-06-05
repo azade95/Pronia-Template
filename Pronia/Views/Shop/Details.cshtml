@@ -111,7 +111,7 @@
                             </select>
                         </div>
                         <p class="short-desc">
-                           @Model.Product.Description.Substring(0,50)
+                            @(Model.Product.Description.Length >= 50 ? Model.Product.Description.Substring(0,50): Model.Product.Description)
                         </p>
                         <ul class="quantity-with-btn">
                             <li class="quantity">
